@@ -81,7 +81,7 @@ void FT232::configureEndpoints() {
     }
 }
 
-bool FT232::onSetupPacket(uint8_t ep, uint8_t __attribute__((unused)) target, uint8_t __attribute__((unused)) *data, uint32_t __attribute__((unused)) l) {
+bool FT232::onSetupPacket(uint8_t ep __attribute__((unused)), uint8_t __attribute__((unused)) target, uint8_t __attribute__((unused)) *data, uint32_t __attribute__((unused)) l) {
 
     uint16_t wRequest = (data[0] << 8) | data[1];
     uint16_t wValue = (data[2] << 8) | data[3];
@@ -114,9 +114,11 @@ bool FT232::onSetupPacket(uint8_t ep, uint8_t __attribute__((unused)) target, ui
             _manager->sendBuffer(0, NULL, 0);
             return true;
             break;
-        case FTDI_SIO_GET_MODEM_STATUS:
-            _manager->sendBuffer(0, NULL, 0);
-            return true;
+        case FTDI_SIO_GET_MODEM_STATUS: {
+                uint8_t stat = 0xF0;
+                _manager->sendBuffer(0, &stat, 1);
+                return true;
+            }
             break;
         case FTDI_SIO_SET_EVENT_CHAR:
             _manager->sendBuffer(0, NULL, 0);
@@ -130,9 +132,11 @@ bool FT232::onSetupPacket(uint8_t ep, uint8_t __attribute__((unused)) target, ui
             _manager->sendBuffer(0, NULL, 0);
             return true;
             break;
-        case FTDI_SIO_GET_LATENCY_TIMER:
-            _manager->sendBuffer(0, NULL, 0);
-            return true;
+        case FTDI_SIO_GET_LATENCY_TIMER: {
+                uint8_t latency = 5;
+                _manager->sendBuffer(0, &latency, 1);
+                return true;
+            }
             break;
     }
     return false;
