@@ -1,0 +1,18 @@
+{
+    "name": "FT232",
+    "provides": "FT232.h",
+    "license": "LICENSE.md",
+    "readme": "README.md",
+    "description": "FT232 emulator for chipKIT",
+    "category": "Communications",
+    "subcategory": "Serial",
+    "maintainer": "Matt Jenkins <matt@majenko.co.uk>",
+    "version": "1.0.0",
+    "family": "pic32",
+    "core": "chipkit",
+    "install": {
+        "examples": "/",
+        "FT232.cpp": "/",
+        "FT232.h": "/"
+    }
+}
